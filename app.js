@@ -4,8 +4,14 @@
 
 let min = 1,
     max = 10,
-    winningNumber = 2,
+    winningNumber = getRandomNumber(min,max),
     guessesLeft = 3;
+
+
+//random number generator
+function getRandomNumber(min,max){
+    return Math.floor(Math.random()*(max-min)+min);
+}
 
 //UI Elements
 const game = document.querySelector('#game');
@@ -19,6 +25,18 @@ const message = document.querySelector('.message');
 
 minNum.textContent = min;
 maxNum.textContent = max;
+
+// reload  game
+// game.addEventListener('mousedown',function(e){
+// if(e.target.className === 'play-again'){
+//     console.log(1);
+// }
+// });
+game.addEventListener('mousedown', function(e){
+  if(e.target.className === 'play-again'){
+    window.location.reload();
+  }
+});
 
 //listen on btn click
 
@@ -45,7 +63,7 @@ function guessingGame(){
 
             if (guessesLeft === 0){
                 //Game Over
-                gameOver(false, `Game over!. You lost,${winningNumber} is the correct number`);
+                gameOver(false, `Game over!. You lost, ${winningNumber} is the correct number`);
             } else {
                 setMessage(`You have ${guessesLeft} guesses left`, 'grey');
             }
@@ -65,8 +83,10 @@ function gameOver(won, msg){
     let color;
     won === true ? color = 'green' : color = 'red';
     guessInput.disabled = true;
-    guessBtn.disabled = true;
+    //guessBtn.disabled = true;
     setMessage(msg,color);
+    guessBtn.value = 'Play Again';
+    guessBtn.className += 'play-again';
 
 }
 
